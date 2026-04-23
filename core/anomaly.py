@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 def compute_reconstruction_error(original, reconstructed):
     # Mean squared error per sequence
@@ -6,13 +7,15 @@ def compute_reconstruction_error(original, reconstructed):
     return errors
 
 
-def get_threshold(errors, method="percentile"):
-    if method == "percentile":
-        return np.percentile(errors, 95)  # top 5% = anomalies
-    elif method == "std":
-        return errors.mean() + 3 * errors.std()
-    else:
-        raise ValueError("Unknown method")
+def adaptive_threshold(errors, window=100, k=3):
+    errors_series = pd.Series(errors)
+
+    rolling_mean = errors_series.rolling(window=window).mean()
+    rolling_std = errors_series.rolling(window=window).std()
+
+    threshold = rolling_mean + k * rolling_std
+
+    return threshold.bfill().values
 
 
 def detect_anomalies(errors, threshold):
