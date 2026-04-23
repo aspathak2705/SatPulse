@@ -7,7 +7,6 @@ from pathlib import Path
 import pandas as pd
 
 from core.anomaly import adaptive_threshold
-from core.preprocess import clean_data
 from data.loader import load_selected_parameters
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -67,7 +66,7 @@ def _load_dashboard_frame_cached(selected_params: tuple[str, ...]) -> pd.DataFra
     if telemetry is None or telemetry.empty:
         raise ValueError("No telemetry data was loaded for the selected parameters.")
 
-    telemetry = clean_data(telemetry).copy()
+    telemetry = telemetry.ffill().dropna().copy()
     telemetry = telemetry.iloc[WINDOW_SIZE:].reset_index()
     timestamp_column = telemetry.columns[0]
     telemetry = telemetry.rename(columns={timestamp_column: "timestamp"})

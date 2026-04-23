@@ -2,6 +2,4 @@ numpy
 pandas
 plotly
 pyarrow
-scikit-learn
 streamlit
-torch
