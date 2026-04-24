@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 import math
+import sys
 from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
 from core.anomaly import adaptive_threshold
 from data.loader import load_selected_parameters
 
-BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_PATH = BASE_DIR / "data" / "raw"
 RESULTS_PATH = BASE_DIR / "outputs" / "results.csv"
 WINDOW_SIZE = 20
