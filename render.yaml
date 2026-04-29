@@ -8,4 +8,4 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.9
       - key: ALLOWED_ORIGINS
-        value: https://satpulse.vercel.app
+        value: https://sat-pulse.vercel.app,https://satpulse.vercel.app
