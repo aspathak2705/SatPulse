@@ -1,5 +1,7 @@
+fastapi
 numpy
 pandas
 plotly
 pyarrow
 streamlit
+uvicorn
