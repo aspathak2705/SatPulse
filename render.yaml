@@ -1,9 +1,11 @@
 services:
   - type: web
-    name: satpulse-dashboard
+    name: satpulse-api
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run dashboard/app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: ALLOWED_ORIGINS
+        value: https://satpulse.vercel.app

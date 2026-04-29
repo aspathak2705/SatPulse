@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import sys
 
@@ -12,6 +13,24 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from core.dashboard_data import build_dataset, clear_dataset_cache
 
+DEFAULT_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:5180",
+    "http://127.0.0.1:5180",
+    "https://satpulse.vercel.app",
+]
+
+
+def get_allowed_origins() -> list[str]:
+    configured_origins = os.getenv("ALLOWED_ORIGINS", "")
+    extra_origins = [
+        origin.strip()
+        for origin in configured_origins.split(",")
+        if origin.strip()
+    ]
+    return [*DEFAULT_ALLOWED_ORIGINS, *extra_origins]
+
 app = FastAPI(
     title="SatPulse API",
     version="1.0.0",
@@ -20,12 +39,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:5180",
-        "http://127.0.0.1:5180",
-    ],
+    allow_origins=get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
