@@ -5,7 +5,7 @@
     <strong>An AI-assisted telemetry anomaly detection dashboard for satellite health monitoring</strong>
   </p>
   <p align="center">
-    <a href="sat-pulse.vercel.app">Live Demo</a>
+    <a href="https://sat-pulse.vercel.app/">Live Demo</a>
   </p>
   <p align="center">
     <img src="https://img.shields.io/badge/Frontend-Streamlit-FF4B4B" alt="Frontend" />
